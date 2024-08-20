@@ -20,14 +20,14 @@ class Container2List extends StatelessWidget {
         return cubit.container1List.isNotEmpty
             ? ListView.builder(
                 shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 itemCount: cubit.container1List.length,
                 itemBuilder: (ctx, index) => CustomContainer2(
                   container1Model: cubit.container1List[index],
                 ),
               )
-            : Center(child: const CircularProgressIndicator());
+            : const Center(child: CircularProgressIndicator());
       },
     );
   }

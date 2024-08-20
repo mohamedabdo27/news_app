@@ -24,7 +24,7 @@ class DetailsScreen extends StatelessWidget {
             child: Image.network(
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height * 400 / 812,
-              containerModel.image ??
+              containerModel.imageUrl ??
                   "https://images.unsplash.com/photo-1523878288860-7ad281611901?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             ),
           ),
@@ -46,7 +46,7 @@ class DetailsScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 16,
                   overflow: TextOverflow.ellipsis,
-                  containerModel.text2 ?? "no content found",
+                  containerModel.description ?? "no content found",
                   style: GoogleFonts.nunito(
                     fontSize: 14,
                     color: const Color(0xff2E0505),
@@ -73,7 +73,7 @@ class DetailsScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      containerModel.text3.substring(0, 11),
+                      containerModel.pubDate.substring(0, 11),
                       style: GoogleFonts.nunito(
                         fontSize: 12,
                         color: const Color(0xff2E0505),
@@ -86,7 +86,7 @@ class DetailsScreen extends StatelessWidget {
                     Text(
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      containerModel.text1,
+                      containerModel.title,
                       style: const TextStyle(
                         fontSize: 16,
                         color: Color(0xff2E0505),

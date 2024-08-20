@@ -16,14 +16,21 @@ class NewsServices {
       final List<dynamic> results = jsonData["results"];
 
       List<Container1Model> resultsList = [];
+
       resultsList = results.map((article) {
-        return Container1Model(
-            link: article["link"],
-            image: article["image_url"],
-            text1: article["title"],
-            text2: article["description"],
-            text3: article["pubDate"]);
+        return Container1Model.fromJson(article);
       }).toList();
+
+      //  resultsList = results.map((article) {
+      //   return Container1Model(
+      //     link: article["link"],
+      //     image: article["image_url"],
+      //     text1: article["title"],
+      //     text2: article["description"],
+      //     text3: article["pubDate"],
+      //     id: article["article_id"],
+      //   );
+      // }).toList();
       return resultsList;
     } catch (e) {
       throw ("There was error ,try again later");
@@ -41,13 +48,17 @@ class NewsServices {
 
       List<Container1Model> resultsList = [];
       resultsList = results.map((article) {
-        return Container1Model(
-            link: article["link"],
-            image: article["image_url"],
-            text1: article["title"],
-            text2: article["description"],
-            text3: article["pubDate"]);
+        return Container1Model.fromJson(article);
       }).toList();
+
+      //   return Container1Model(
+      //       link: article["link"],
+      //       id: article["article_id"],
+      //       image: article["image_url"],
+      //       text1: article["title"],
+      //       text2: article["description"],
+      //       text3: article["pubDate"]);
+      // }).toList();
       return resultsList;
     } on DioException catch (e) {
       throw ("There was error ,try again later");
@@ -68,13 +79,16 @@ class NewsServices {
 
       List<Container1Model> resultsList = [];
       resultsList = results.map((article) {
-        return Container1Model(
-            link: article["link"],
-            image: article["image_url"],
-            text1: article["title"],
-            text2: article["description"],
-            text3: article["pubDate"]);
+        return Container1Model.fromJson(article);
       }).toList();
+      //   return Container1Model(
+      //       id: article["article_id"],
+      //       link: article["link"],
+      //       image: article["image_url"],
+      //       text1: article["title"],
+      //       text2: article["description"],
+      //       text3: article["pubDate"]);
+      // }).toList();
       return resultsList;
     } catch (e) {
       throw ("there was error ,try again later");

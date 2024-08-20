@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +14,16 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit() : super(InitialState());
 
   static CategoryCubit getCubit(context) => BlocProvider.of(context);
+//==================================================================
+  Map<String, bool> favorite = {};
+  // changeFavorite(String id) {
+  //   favorite[id] = !favorite[id]!;
+
+  //   emit(ChangeFavorie());
+  // }
 
 //------------------------------------------------------------------
+
   bool isDark = false;
   changeMode({bool? isDarkMode}) {
     if (isDarkMode != null) {
@@ -44,6 +51,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     FavoriteScreen(),
     ProfileScreen(),
   ];
+
   void changeNavBar(int index) {
     currentIndex = index;
     emit(ChangeButtonNavBarState());
@@ -64,6 +72,14 @@ class CategoryCubit extends Cubit<CategoryState> {
     container1List = [];
     NewsServices(Dio()).getCategoryNews(catName).then((value) {
       container1List = value;
+      //   log(container1List[1].id);
+      container1List.forEach((element) {
+        favorite.addAll({
+          element.articleId: false,
+        });
+        // log(element.id);
+      });
+      //  log(favorite.toString());
       emit(
         GetCategoryNewsState(),
       );
@@ -73,6 +89,17 @@ class CategoryCubit extends Cubit<CategoryState> {
     });
   }
 
+  List<Container1Model> searchList = [];
+  void getSearchNews({required String searchKey}) {
+    emit(LoadingSearchNewsState());
+
+    NewsServices(Dio()).getSearchNews(searchKey).then((value) {
+      searchList = value;
+      emit(GetSearchNewsSuccessState());
+    }).catchError((onError) {
+      emit(GetSearchNewsFalureState(error: onError));
+    });
+  }
   // List<Container1Model> topNewsList = [];
   // void getTopNews() {
   //   emit(LoadingTopNewsState());

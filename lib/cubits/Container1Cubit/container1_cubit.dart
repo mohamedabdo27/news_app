@@ -18,8 +18,9 @@ class Container1Cubit extends Cubit<Container1State> {
         GetTopNewsState(),
       );
     }).catchError((onError) {
+      print("error  : ${onError.toString()}");
+
       emit(GetTopNewsFalureState(error: onError));
-      print(onError.toString());
     });
   }
 }

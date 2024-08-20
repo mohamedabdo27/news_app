@@ -29,7 +29,7 @@ class CustomContainer1 extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(
-              container1model.image ??
+              container1model.imageUrl ??
                   "https://images.unsplash.com/photo-1523878288860-7ad281611901?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             ),
           ),
@@ -38,7 +38,7 @@ class CustomContainer1 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              container1model.text1,
+              container1model.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -50,7 +50,7 @@ class CustomContainer1 extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 10 / 812,
             ),
             Text(
-              container1model.text2 ?? "",
+              container1model.description ?? "",
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -63,7 +63,7 @@ class CustomContainer1 extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  container1model.text3.substring(0, 11),
+                  container1model.pubDate.substring(0, 11),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.nunito(
