@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:news_app/Widget/category.dart';
+import 'package:news_app/Widget/category_item.dart';
 import 'package:news_app/models/category_model.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});
+
   final List<CategoryModel> categoryList = const [
     CategoryModel(name: "top"),
     CategoryModel(name: "business"),
@@ -17,12 +20,13 @@ class CategoryList extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    log("CategoryList");
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           for (final category in categoryList)
-            Category(
+            CategoryItem(
               index: categoryList.indexOf(category),
               category: category,
             ),

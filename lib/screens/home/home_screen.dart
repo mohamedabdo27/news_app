@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/cubits/category_cubit/cartegory_states.dart';
-import 'package:news_app/cubits/category_cubit/category_cubit.dart';
+import 'package:news_app/cubits/app_cubit/app_states.dart';
+import 'package:news_app/cubits/app_cubit/app_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoryCubit, CategoryState>(
-      listener: (context, state) {},
+    AppCubit cubit = AppCubit.getCubit(context);
+    return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        CategoryCubit cubit = CategoryCubit.getCubit(context);
         return Scaffold(
           bottomNavigationBar: BottomNavigationBar(
               currentIndex: cubit.currentIndex,
@@ -48,11 +47,11 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     cubit.changeMode();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.brightness_4_outlined,
                   ),
                 ),
-              )
+              ),
             ],
             title: Center(
               child: Text(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_app/models/custom_container1.dart';
+import 'package:news_app/models/news_model.dart';
 import 'package:news_app/screens/web_view.dart';
 
-class CustomContainer1 extends StatelessWidget {
-  const CustomContainer1({
+class HorizontalListItem extends StatelessWidget {
+  const HorizontalListItem({
     super.key,
     required this.container1model,
   });
-  final Container1Model container1model;
+  final NewsModel container1model;
   @override
   Widget build(BuildContext context) {
     return InkWell(

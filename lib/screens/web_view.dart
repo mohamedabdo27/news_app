@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
-  WebViewScreen({super.key, required this.link});
+  const WebViewScreen({super.key, required this.link});
   final String? link;
 
   @override
@@ -16,7 +16,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
   WebViewController controller = WebViewController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)

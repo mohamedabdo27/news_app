@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_app/models/custom_container1.dart';
+import 'package:news_app/models/news_model.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key, required this.containerModel});
-  final Container1Model containerModel;
+  final NewsModel containerModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
