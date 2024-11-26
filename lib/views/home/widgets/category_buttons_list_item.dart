@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,8 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/cubits/category_news_cubit/category_news_cubit.dart';
 import 'package:news_app/models/category_model.dart';
 
-class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.category, required this.index});
+class CategoryButtonsListItem extends StatelessWidget {
+  const CategoryButtonsListItem({
+    super.key,
+    required this.category,
+    required this.index,
+  });
   final CategoryModel category;
   final int index;
 
@@ -18,8 +20,6 @@ class CategoryItem extends StatelessWidget {
 
     return BlocBuilder<CategoryNewsCubit, CategoryNewsState>(
       builder: (context, state) {
-        log("CategoryItem");
-
         return Container(
           margin: const EdgeInsets.only(right: 8),
           child: ElevatedButton(
@@ -41,7 +41,6 @@ class CategoryItem extends StatelessWidget {
             ),
             onPressed: () {
               categoryCubit.getCategoryNews(catName: category.name);
-              //  categoryCubit.changeColor(index);
               categoryCubit.indexButton = index;
             },
             child: Text(

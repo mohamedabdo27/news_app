@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/Widget/list_view_item.dart';
+import 'package:news_app/views/home/widgets/category_news_list_item.dart';
 import 'package:news_app/cubits/app_cubit/app_cubit.dart';
 
 class ResultBody extends StatelessWidget {
@@ -51,8 +51,8 @@ class ResultBody extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: cubit.searchList.length,
               itemBuilder: (context, index) {
-                return ListViewItem(
-                  container1Model: cubit.searchList[index],
+                return CategoryNewsListItem(
+                  newsModel: cubit.searchList[index],
                 );
               },
             ),

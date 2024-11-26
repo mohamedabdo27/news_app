@@ -1,17 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:news_app/Widget/category_news.dart';
-import 'package:news_app/Widget/custom_horizontal_list_view.dart';
-import 'package:news_app/Widget/custom_text_field.dart';
+import 'package:news_app/views/home/widgets/category_news_section.dart';
+import 'package:news_app/views/home/widgets/horizontal_list.dart';
+import 'package:news_app/views/home/widgets/custom_text_field.dart';
 import 'package:news_app/cubits/app_cubit/app_cubit.dart';
 
-class HomeBody extends StatelessWidget {
-  const HomeBody({super.key});
+class HomeViewBody extends StatelessWidget {
+  const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    log("Home body");
     AppCubit cubit = AppCubit.getCubit(context);
 
     return Padding(
@@ -24,10 +21,11 @@ class HomeBody extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomTextField(cubit: cubit),
-              const Spacer(),
+              Expanded(child: CustomTextField(cubit: cubit)),
+              const SizedBox(
+                width: 12,
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 32 / 812,
                 width: MediaQuery.of(context).size.width * 33 / 375,
@@ -77,9 +75,9 @@ class HomeBody extends StatelessWidget {
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 16 / 812),
-          const CustomHorizontalListView(),
+          const HorizontalList(),
           SizedBox(height: MediaQuery.of(context).size.height * 24 / 812),
-          const CategoryNews()
+          const CategoryNewsSection()
           //=-------------------------------------------------------------
         ],
       ),

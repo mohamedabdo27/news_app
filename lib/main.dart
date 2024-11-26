@@ -2,13 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/SharedPreferences/shared_preverences.dart';
+import 'package:news_app/core/utils/shared_preverences.dart';
 import 'package:news_app/bloc_observer/bloc_observer.dart';
-import 'package:news_app/cubits/horizontal_list_view_Cubit/horizontal_list_view_state.dart';
+import 'package:news_app/core/utils/api_service.dart';
+import 'package:news_app/cubits/horizontal_list_view_Cubit/horizontal_list_view_cubit.dart';
 import 'package:news_app/cubits/app_cubit/app_states.dart';
 import 'package:news_app/cubits/app_cubit/app_cubit.dart';
 import 'package:news_app/cubits/category_news_cubit/category_news_cubit.dart';
-import 'package:news_app/screens/home/home_screen.dart';
+import 'package:news_app/views/home/home_view.dart';
 import 'package:news_app/services/news_service.dart';
 
 void main() async {
@@ -49,27 +50,27 @@ class NewsApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AppCubit(newsServices: NewsServices(dio: Dio()))
+          create: (context) => AppCubit(
+              newsServices: NewsServices(ApiService(dio: Dio()), dio: Dio()))
             ..changeMode(isDarkMode: isDark),
         ),
         BlocProvider(
-          create: (context) =>
-              HorizontalListViewCubit(newsServices: NewsServices(dio: Dio()))
-                ..getTopNews(),
+          create: (context) => HorizontalListViewCubit(
+              newsServices: NewsServices(ApiService(dio: Dio()), dio: Dio()))
+            ..getTopNews(),
         ),
         BlocProvider(
-          create: (context) =>
-              CategoryNewsCubit(newsServices: NewsServices(dio: Dio()))
-                ..getCategoryNews(catName: "health"),
+          create: (context) => CategoryNewsCubit(
+              newsServices: NewsServices(ApiService(dio: Dio()), dio: Dio()))
+            ..getCategoryNews(catName: "health"),
         ),
       ],
-      child: BlocConsumer<AppCubit, AppState>(
-        listener: (context, state) {},
+      child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: AppCubit.getCubit(context).isDark ? darkTheme : theme,
-            home: const HomeScreen(),
+            home: const HomeView(),
           );
         },
       ),

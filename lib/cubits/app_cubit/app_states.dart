@@ -32,8 +32,6 @@ class GetSearchNewsFailureState extends AppState {
 //   GetTopNewsFalureState({required this.error});
 // }
 
-class ChangeButtonState extends AppState {}
-
 class ChangeButtonNavBarState extends AppState {}
 
 class ChangeModeState extends AppState {}

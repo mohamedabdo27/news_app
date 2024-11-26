@@ -1,6 +1,5 @@
 part of 'category_news_cubit.dart';
 
-@immutable
 abstract class CategoryNewsState {}
 
 final class CategoryNewsInitialState extends CategoryNewsState {}

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/SharedPreferences/shared_preverences.dart';
-import 'package:news_app/screens/home/homeBodies/favorite_screen.dart';
-import 'package:news_app/screens/home/homeBodies/home_screen.dart';
-import 'package:news_app/screens/home/homeBodies/profile_screen.dart';
+import 'package:news_app/core/utils/shared_preverences.dart';
+import 'package:news_app/views/home/widgets/favorite_screen.dart';
+import 'package:news_app/views/home/widgets/home_view_body.dart';
+import 'package:news_app/views/home/widgets/profile_screen.dart';
 import 'package:news_app/cubits/app_cubit/app_states.dart';
 import 'package:news_app/models/news_model.dart';
 import 'package:news_app/services/news_service.dart';
@@ -32,6 +32,24 @@ class AppCubit extends Cubit<AppState> {
   }
 
 //===================================================================
+  List<BottomNavigationBarItem> bottomNavBarItems = const [
+    BottomNavigationBarItem(
+      label: "Home",
+      icon: Icon(Icons.home),
+    ),
+    BottomNavigationBarItem(
+      label: "Favorite",
+      icon: Icon(
+        Icons.favorite,
+      ),
+    ),
+    BottomNavigationBarItem(
+      label: "Profile",
+      icon: Icon(
+        Icons.person,
+      ),
+    )
+  ];
   int currentIndex = 0;
   List<String> appBarTitle = [
     "Home Page",
@@ -39,7 +57,7 @@ class AppCubit extends Cubit<AppState> {
     "Profile Page",
   ];
   List<Widget> screens = const [
-    HomeBody(),
+    HomeViewBody(),
     FavoriteScreen(),
     ProfileScreen(),
   ];
@@ -51,21 +69,21 @@ class AppCubit extends Cubit<AppState> {
 
 //========================================================================
 
-  // int indexButton = 2;
-  // void changeColor(int index) {
-  //   indexButton = index;
-  //   emit(ChangeButtonState());
-  // }
-
 ////============================================================================
   List<NewsModel> searchList = [];
-  void getSearchNews({required String searchKey}) {
+  void getSearchNews({
+    required String searchKey,
+  }) async {
     emit(GetSearchNewsLoadingState());
-    newsServices.getSearchNews(searchKey).then((value) {
-      searchList = value;
-      emit(GetSearchNewsSuccessState());
-    }).catchError((onError) {
-      emit(GetSearchNewsFailureState(error: onError));
-    });
+    final result = await newsServices.getSearchNews(searchKey);
+    result.fold(
+      (failure) {
+        emit(GetSearchNewsFailureState(error: failure.error));
+      },
+      (searchListResponse) {
+        searchList = searchListResponse;
+        emit(GetSearchNewsSuccessState());
+      },
+    );
   }
 }

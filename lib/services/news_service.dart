@@ -1,21 +1,23 @@
-import 'dart:developer';
-
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:news_app/core/error/failure.dart';
+import 'package:news_app/core/utils/api_service.dart';
 import 'package:news_app/models/news_model.dart';
 
 class NewsServices {
   final Dio dio;
-
-  const NewsServices({required this.dio});
+  final ApiService apiService;
+  const NewsServices(this.apiService, {required this.dio});
 
   final String apikey = "pub_38727029b11b4b1c0d7ab4e389eb57343ba2c";
 
-  Future<List<NewsModel>> getCategoryNews(String catName) async {
+  Future<Either<Failure, List<NewsModel>>> getCategoryNews(
+    String catName,
+  ) async {
     try {
-      Response response = await dio.get(
-          "https://newsdata.io/api/1/news?apikey=$apikey&category=$catName");
-
-      final Map<String, dynamic> jsonData = response.data;
+      var jsonData = await apiService.get(
+        path: "https://newsdata.io/api/1/news?apikey=$apikey&category=$catName",
+      );
 
       final List<dynamic> results = jsonData["results"];
 
@@ -24,22 +26,23 @@ class NewsServices {
       resultsList = results.map((article) {
         return NewsModel.fromJson(article);
       }).toList();
-      return resultsList;
+      return right(resultsList);
     } catch (e) {
-      log(e.toString());
-      throw ("There was error ,try again later");
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(dioExcepition: e));
+      }
+      return left(ServerFailure(error: "there was an error,try again later"));
     }
   }
 
-  Future<List<NewsModel>> getSearchNews(String name) async {
+  Future<Either<Failure, List<NewsModel>>> getSearchNews(String name) async {
     if (name == "") {
-      return [];
+      return right([]);
     }
     try {
-      Response response = await dio
-          .get("https://newsdata.io/api/1/news?apikey=$apikey&q=$name");
-
-      final Map<String, dynamic> jsonData = response.data;
+      final jsonData = await apiService.get(
+        path: "https://newsdata.io/api/1/news?apikey=$apikey&q=$name",
+      );
 
       final List<dynamic> results = jsonData["results"];
 
@@ -48,9 +51,14 @@ class NewsServices {
         return NewsModel.fromJson(article);
       }).toList();
 
-      return resultsList;
+      return right(resultsList);
     } catch (e) {
-      throw ("there was error ,try again later");
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(dioExcepition: e));
+      }
+      return left(
+        ServerFailure(error: " there was an error,try again later"),
+      );
     }
   }
 }

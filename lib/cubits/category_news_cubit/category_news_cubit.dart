@@ -1,8 +1,4 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:news_app/models/news_model.dart';
 import 'package:news_app/services/news_service.dart';
 
@@ -17,21 +13,23 @@ class CategoryNewsCubit extends Cubit<CategoryNewsState> {
   int indexButton = 2;
   void changeColor(int index) {
     indexButton = index;
-    // emit(ChangeButtonState());
   }
 
   List<NewsModel> newsList = [];
-  void getCategoryNews({required String catName}) {
+  void getCategoryNews({required String catName}) async {
     emit(GetCategoryNewsLoadingState());
 
     newsList = [];
-    newsServices.getCategoryNews(catName).then((value) {
-      newsList = value;
-
+    var result = await newsServices.getCategoryNews(catName);
+    result.fold((failure) {
+      emit(
+        GetCategoryNewsFailureState(
+          error: failure.error,
+        ),
+      );
+    }, (newsListResponse) {
+      newsList = newsListResponse;
       emit(GetCategoryNewsSuccessState());
-    }).catchError((onError) {
-      emit(GetCategoryNewsFailureState(error: onError));
-      log(onError.toString());
     });
   }
 }
