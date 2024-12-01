@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/views/home/widgets/category_news_list_item.dart';
 import 'package:news_app/cubits/category_news_cubit/category_news_cubit.dart';
+import 'package:news_app/views/home/widgets/category_news_list_tem_placeholder.dart';
 
 class CategoryNewsList extends StatelessWidget {
   const CategoryNewsList({super.key});
@@ -15,13 +16,13 @@ class CategoryNewsList extends StatelessWidget {
           return Center(child: Text(state.error!));
         }
         if (state is GetCategoryNewsLoadingState) {
-          return const Column(
-            children: [
-              SizedBox(
-                height: 50,
-              ),
-              Center(child: CircularProgressIndicator()),
-            ],
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            itemCount: 10,
+            itemBuilder: (ctx, index) =>
+                const CategoryNewsListItemPlaceholder(),
           );
         }
 

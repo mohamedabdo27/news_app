@@ -14,6 +14,9 @@ class NoResult extends StatelessWidget {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(
+          height: 200,
+        ),
         const Text(
           "There is no result about",
           style: TextStyle(

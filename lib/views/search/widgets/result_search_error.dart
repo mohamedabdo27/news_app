@@ -8,8 +8,11 @@ class ResultSearchError extends StatelessWidget {
   final String error;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(error),
+    return Padding(
+      padding: const EdgeInsets.only(top: 200.0),
+      child: Center(
+        child: Text(error),
+      ),
     );
   }
 }
